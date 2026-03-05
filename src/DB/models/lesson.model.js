@@ -19,19 +19,19 @@ const lessonSchema = new mongoose.Schema(
     },
     description: String,
     content: {
-      type: String, // HTML content
+      type: String, 
     },
     video: {
       url: String,
       publicId: String,
-      duration: Number, // in minutes
+      duration: Number, 
     },
     type: {
       type: String,
       enum: ['video', 'text', 'quiz', 'assignment'],
       default: 'video',
     },
-    duration: Number, // in minutes
+    duration: Number, 
     order: {
       type: Number,
       default: 0,
@@ -49,10 +49,10 @@ const lessonSchema = new mongoose.Schema(
 );
 
 // Generate slug
-lessonSchema.pre('save', function (next) {
-  if (this.isModified('title')) {
-    this.slug = slugify(this.title, { lower: true, strict: true });
-  }
+lessonSchema.pre('save', async function () {
+    if (this.isModified('title')) {
+        this.slug = slugify(this.title, { lower: true, strict: true });
+    }
 });
 
 const Lesson = mongoose.model('Lesson', lessonSchema);

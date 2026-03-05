@@ -1,7 +1,5 @@
 import { createValidationError } from "../utils/APIErrors.js"
 
-
-
 export const ValidationRequest =  ( schema ) =>{
 
     return async ( req , res , next  ) => {
@@ -15,15 +13,15 @@ export const ValidationRequest =  ( schema ) =>{
 
             },
             {
-                abortEarly : false , 
-                stripUnknown : true
+                abortEarly : false , // return all errors not just the first one
+                stripUnknown : true // remove unknown fields that are not defined in the schema
             }
          )
 
          if (error) {
             const errorDetail = error.details.map( detail => ( 
                  { 
-                field :detail.path.join(".") ,
+                field :detail.path.join(".") , 
                 message : detail.message
              } 
              ) ) 
@@ -31,25 +29,16 @@ export const ValidationRequest =  ( schema ) =>{
              const validationError = createValidationError( "validation failed" )
              validationError.stack = errorDetail
              throw validationError
-
-
          }
 
          req.validated  = value
-
          if (value.body)  req.body = value.body
-
          if (value.params)  req.params = value.params
-
          if (value.query)  req.query = value.query
 
-
          next()
-
          } catch (error) {
             next(error)
         }
-
     }
-
 }

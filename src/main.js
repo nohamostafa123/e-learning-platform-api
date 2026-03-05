@@ -15,59 +15,44 @@ import { config } from "./config/env.js"
 import { apiLimit } from "./middlewares/ratelimit.middleware.js"
 
 dotenv.config()
-
-
-
 const bootstrap = () => {
-
     const app = express()
 
-    // ======================== SEC 🔐
+    // ======================== SEC 
+    app.use(helmet())
+    app.use(cors({
+        origin: [config.FRONTEND_URL, "*"],
+        credentials: true
+    }))
 
-    app.use( helmet(   )  )
-    app.use( cors( {
-        origin : [config.FRONTEND_URL , "*" ] ,
-        credentials : true
-    } ) )
-    
     // app.use( mongoSanitize() )
-    
     // app.use(xss() )
 
-    app.use( apiLimit )
-
-
-    app.use( cookieParser() )
+    app.use(apiLimit)
+    app.use(cookieParser())
 
     // test prod
-    
+
     //DB
     DateBase()
-
 
     // Verify email transporter
     verifyEmailTransporter()
 
     // routers
-    routerHandler( app , express )
+    routerHandler(app, express)
 
-
-
-
-
-    // 404 handler - must be before error handler
+    // 404 handler 
     app.use(notFound);
-    
 
     // Global error handler - must be last
-    app.use( errorHandler )
+    app.use(errorHandler)
 
-     const server = app.listen( process.env.PORT ,  ( error ) =>{
+    const server = app.listen(process.env.PORT, (error) => {
+        console.log(`server is running ${process.env.PORT}
+         ${JSON.stringify(server.address())}  `);
 
-    console.log( `server is running ${ process.env.PORT }
-         ${ JSON.stringify( server.address() ) }  ` );
-        
-    } )
+    })
 
 
 }

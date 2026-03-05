@@ -36,7 +36,7 @@ const courseSchema = new mongoose.Schema(
       default: 'beginner',
     },
     duration: {
-      type: Number, // in hours
+      type: Number, 
       default: 0,
     },
     studentsEnrolled: {

@@ -6,15 +6,12 @@ import User from "../DB/models/user.model.js" // ← add this
 export const authentication = asyncHandler(async (req, res, next) => {
 
     let token = req.headers.authorization?.split("Bearer ")[1]
-
     if (!token) {
         token = req.cookies?.accessToken
     }
-
     if (!token) {
         throw createUnauthorizedError("no token provided")
     }
-
     const decoded = verifyToken(token)
 
     // ← fetch user from DB first
@@ -23,7 +20,6 @@ export const authentication = asyncHandler(async (req, res, next) => {
     if (!user) {
         throw createUnauthorizedError("user no longer exists")
     }
-
     if (!user.isActive) {
         throw createUnauthorizedError("user account is deactivated")
     }

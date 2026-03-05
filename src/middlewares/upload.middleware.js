@@ -1,6 +1,6 @@
 import multer from "multer";
 import path from "path";
-import { config } from "../Config/env.js";
+import { config } from "../config/env.js";
 import { createBadRequestError } from "../utils/APIErrors.js";
 
 
@@ -16,8 +16,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  const fileExtension = path.extname(file.originalname).substring(1)
-  .toLowerCase();
+  const fileExtension = path.extname(file.originalname).substring(1).toLowerCase();
   
   if (file.fieldname === 'profileImage' || file.fieldname === 'courseImage') {
     if (!config.UPLOAD.ALLOWED_IMAGE_TYPES.includes(fileExtension)) {
