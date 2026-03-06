@@ -1,10 +1,8 @@
-
 import jwt from "jsonwebtoken"
 import { config } from "../config/env.js"
 import { createUnauthorizedError } from "./APIErrors.js"
 
 export const generateAccessToken = ( payload ) => {
-
     return jwt.sign( payload , config.JWT.SECRET  ,  {
         expiresIn : config.JWT.ACCESS_EXPIRE
     } ) 
@@ -13,7 +11,6 @@ export const generateAccessToken = ( payload ) => {
 
 
 export const generateRefreshToken = ( payload ) => {
-
     return jwt.sign( payload , config.JWT.SECRET  ,  {
         expiresIn : config.JWT.REFRESH_EXPIRE
     } ) 
@@ -25,10 +22,6 @@ export const generateResetToken = (payload) => {
     expiresIn: config.JWT.RESET_PASSWORD_EXPIRE,
   });
 };
-
-
-
-
 
 export const verifyToken = (token) => {
   try {
@@ -44,11 +37,6 @@ export const verifyToken = (token) => {
   }
 };
 
-
 export const decodeToken = (token) => {
   return jwt.decode(token);
 };
-
-
-
-

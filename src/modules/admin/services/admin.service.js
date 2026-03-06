@@ -9,7 +9,6 @@ export const getAllUsers = async (page = 1, limit = 10) => {
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: -1 })
-
     const total = await User.countDocuments()
 
     return {
@@ -25,32 +24,25 @@ export const getAllUsers = async (page = 1, limit = 10) => {
 
 export const getUserById = async (id) => {
     const user = await User.findById(id).select("-password")
-
     if (!user) throw createNotFoundError("user not found")
-
     return user
 }
 
 export const updateUserRole = async (id, role) => {
     const user = await User.findById(id)
-
     if (!user) throw createNotFoundError("user not found")
-
     user.role = role
     await user.save()
-
     user.password = undefined
     return user
 }
 
 export const deleteUser = async (id) => {
     const user = await User.findById(id)
-
     if (!user) throw createNotFoundError("user not found")
 
     // Soft delete
     user.isActive = false
     await user.save()
-
     return { message: "user deleted successfully" }
 }

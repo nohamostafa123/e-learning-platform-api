@@ -51,10 +51,7 @@ const bootstrap = () => {
     const server = app.listen(process.env.PORT, (error) => {
         console.log(`server is running ${process.env.PORT}
          ${JSON.stringify(server.address())}  `);
-
     })
-
-
 }
 
 

@@ -1,14 +1,12 @@
-
 import cloudinary from './../config/cloudinary.js';
 import { createBadRequestError } from './APIErrors.js';
-
 
 export const uploadToCloudinary = async (file, folder = 'e-learning') => {
   try {
     const result = await cloudinary.uploader.upload(file.path, {
       folder,
       resource_type: 'auto',
-      public_id: `${Date.now()}-${file.originalname.split('.')[0]}`,
+      public_id: `${Date.now()}-${file.originalname.split('.')[0]}`, 
     });
 
     return {

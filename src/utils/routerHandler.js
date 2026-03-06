@@ -5,8 +5,6 @@ import courseRouter from "../modules/courses/course.routes.js"
 import lessonRouter from "../modules/lessons/lesson.routes.js"
 import enrollmentRouter from "../modules/enrollments/enrollment.routes.js"
 
-
-
 const routerHandler = async ( app , express ) => {
 
     app.use( express.json( ) )

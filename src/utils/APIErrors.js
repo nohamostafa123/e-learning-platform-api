@@ -1,16 +1,11 @@
-
 import { HTTP_STATUS } from '../config/constants.js';
-
-
 export class ApiError extends Error{
-    constructor(  statusCode , message , isOperational = true ,
-        stack = ""
-      ){
+    constructor(  statusCode , message , isOperational = true , stack = ""){
         super( message ) 
         this.statusCode = statusCode 
-        this.isOperational = isOperational 
+        this.isOperational = isOperational //is this error expected or bug 
         this.success = false
-
+      // if stack is provided use it otherwise capture the current stack trace
         if (stack) {
             this.stack = stack
         } else {
@@ -18,15 +13,10 @@ export class ApiError extends Error{
         }
 
       }
-
-
-
-    
 }
 
 
 export const createBadRequestError= ( message = "bad request" ) =>{
-
     return new ApiError( HTTP_STATUS.BAD_REQUEST , message )
 
 }

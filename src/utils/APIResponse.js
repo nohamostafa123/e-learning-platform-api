@@ -1,10 +1,6 @@
 import { HTTP_STATUS } from "../config/constants.js"
 
-
-
-
 export const successResponse = ( data , message ="success" )=>{
-
     return{
         statusCode: HTTP_STATUS.OK ,
         success : true ,
@@ -15,7 +11,6 @@ export const successResponse = ( data , message ="success" )=>{
 }
 
 export const createResponse = ( data , message ="created success" )=>{
-
   return {
     statusCode: HTTP_STATUS.CREATED,
     success: true,
@@ -26,7 +21,6 @@ export const createResponse = ( data , message ="created success" )=>{
 }
 
 export const notfoundResponse = ( data , message ="Delete  success" )=>{
-
   return {
     statusCode: HTTP_STATUS.NO_CONTENT,
     success: true,

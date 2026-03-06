@@ -1,20 +1,20 @@
 import nodemailer from 'nodemailer';
-import { config } from "../Config/env.js"
+import { config } from "../config/env.js"
 import { createInternalError } from "./APIErrors.js"
 
-let transporter = null;
+let transporter = null; // will hold the nodemailer transporter instance 
 
 export const initializeEmailTransporter = () => {
   transporter = nodemailer.createTransport({
-    host: config.EMAIL.HOST || "smtp.gmail.com" ,
-    port: config.EMAIL.PORT || 587 ,
-    secure: config.EMAIL.SECURE || false ,
+    host: config.EMAIL.HOST || "smtp.gmail.com",
+    port: config.EMAIL.PORT || 587,
+    secure: config.EMAIL.SECURE || false, 
     auth: {
       user: config.EMAIL.USER,
       pass: config.EMAIL.PASSWORD,
     },
     tls: {
-      rejectUnauthorized: false 
+      rejectUnauthorized: false // allow self-signed certificates, accept this email unless it's not secure
     }
   });
 };
@@ -25,7 +25,7 @@ export const sendEmail = async (options) => {
   const mailOptions = {
     from: config.EMAIL.FROM,
     to: options.to,
-    subject: options.subject, 
+    subject: options.subject,
     text: options.text,
     html: options.html,
   };
@@ -41,8 +41,8 @@ export const sendEmail = async (options) => {
 
 export const sendWelcomeEmail = async (user) => {
   const subject = `Welcome to ${config.APP_NAME}`;
-const html = `  
-<h1> welcome ${ user.firstName }  </h1>
+  const html = `  
+<h1> welcome ${user.firstName}  </h1>
 <h2> thanks for using our website </h2>
 
 `
@@ -74,17 +74,12 @@ export const sendPasswordResetEmail = async (user, resetToken) => {
 };
 
 
-
-
-
 export const verifyEmailTransporter = async () => {
   try {
     if (!transporter) initializeEmailTransporter();
     await transporter.verify();
-
     return true;
   } catch (error) {
-
     return false;
   }
 };

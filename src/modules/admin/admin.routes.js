@@ -5,7 +5,6 @@ import { authorization } from "../../middlewares/authorization.middleware.js"
 
 const adminRouter = express.Router()
 
-// All admin routes require authentication + admin role
 adminRouter.use(authentication, authorization("admin"))
 
 adminRouter.get("/users", AdminController.getAllUsers)

@@ -5,7 +5,6 @@ import { authorization } from "../../middlewares/authorization.middleware.js"
 
 const courseRouter = express.Router()
 
-// Public routes — anyone can view
 courseRouter.get("/", CourseController.getAllCourses)
 courseRouter.get("/:id", CourseController.getCourseById)
 
